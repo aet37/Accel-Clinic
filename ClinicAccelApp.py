@@ -745,7 +745,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		self.RHValueFeild.setValue(self.rh_current)
 		self.LHValueFeild.setValue(self.lh_current)
-		self.preopRadioButton.setChecked(True)
+		self.RHRadio.setChecked(True)
 
 		# Add any accel trials to the case
 		for item in self.accel_files:
