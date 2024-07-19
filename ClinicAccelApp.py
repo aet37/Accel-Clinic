@@ -318,7 +318,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.AccelPSDCanvas.axes.set_ylabel('PSD (G^2/Hz)', fontsize=13)
 		self.AccelPSDCanvas.axes.set_xlim(min(f), max(f))
 		self.AccelPSDCanvas.axes.set_ylim(0, max(psd) * 2)
-		self.AccelPSDCanvas.axes.set_title(self.accel_trials[i] + ', Accel PSD', fontsize=14)
+		self.AccelPSDCanvas.axes.set_title(self.accel_trials[to_plot] + ', Accel PSD', fontsize=14)
 		self.AccelPSDCanvas.axes.grid(True)
 		self.AccelPSDCanvas.draw()
 
@@ -341,7 +341,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCCWCanvas.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
 			self.SpiralCCWCanvas.draw()
 			self.SpiralCCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
-			self.SpiralCCWCanvas.axes.set_title(self.ccw_spirals[i], fontsize=14)
+			self.SpiralCCWCanvas.axes.set_title('CCW Spiral', fontsize=14)
 			self.SpiralCCWCanvas.draw()
 
 	def clear_all_plots(self):
