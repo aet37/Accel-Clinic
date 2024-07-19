@@ -50,7 +50,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.move(0, 0)
 
 
-		self.setWindowTitle("Clinic Accelerometer Application")
+		self.setWindowTitle("Clinic Tremor Assessment")
 
 		###########################################################################################
 		## Class Variables
@@ -71,7 +71,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.line_spirals = []
 		self.accel_trials = []
 		self.accel_psds = []
-		self.intraop_current = 1
+		self.rh_current = 1
+		self.lh_current = 1
 		self.accel_baseline = None
 		self.baseline_f_peak_val = None
 
@@ -100,7 +101,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.trialNameAccelerom = self.findChild(QtWidgets.QLineEdit, 'trialNameAccel')
 
 		# Spin box
-		self.intraopValueFeild = self.findChild(QtWidgets.QSpinBox, 'intraopValue')
+		self.RHValueFeild = self.findChild(QtWidgets.QSpinBox, 'clinic_rh_value')
+		self.LHValueFeild = self.findChild(QtWidgets.QSpinBox, 'clinic_lh_value')
 
 		# Push Buttons
 		self.startCaseButton = self.findChild(QtWidgets.QPushButton, 'startCase')
@@ -111,8 +113,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.loadCaseButton.clicked.connect(self.load_case)
 		self.resetBoardButton = self.findChild(QtWidgets.QPushButton, 'resetBoard')
 		self.resetBoardButton.clicked.connect(self.handle_reset)
-		self.PlotSpirals = self.findChild(QtWidgets.QPushButton, 'plot_spiral_aspects')
-		self.PlotSpirals.clicked.connect(self.plot_spirals)
 		self.PlotAccels = self.findChild(QtWidgets.QPushButton, 'plot_accel_aspects')
 		self.PlotAccels.clicked.connect(self.plot_accels)
 
@@ -122,28 +122,18 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.downloadAccelButton.clicked.connect(self.download_accel)
 		self.cancelRecordButton = self.findChild(QtWidgets.QPushButton, 'cancelRecord')
 		self.cancelRecordButton.clicked.connect(self.cancel_accel_record)
-		self.setBaselineButton = self.findChild(QtWidgets.QPushButton, 'set_baseline')
-		self.setBaselineButton.clicked.connect(self.set_accel_baseline)
 		self.analyzeAccelDataButton = self.findChild(QtWidgets.QPushButton, 'analyze_accel_data')
 		self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
 
 
 		# Radio Button
-		self.preopRadioButton = self.findChild(QtWidgets.QRadioButton, 'preopRadio')
-		self.intraopRadioButton = self.findChild(QtWidgets.QRadioButton, 'intraopRadio')
-		self.postopRadioButton = self.findChild(QtWidgets.QRadioButton, 'postopRadio')
+		self.RHRadio = self.findChild(QtWidgets.QRadioButton, 'clinic_rh_radio')
+		self.LHRadio = self.findChild(QtWidgets.QRadioButton, 'clinic_lh_radio')
 		self.otherRadioButton = self.findChild(QtWidgets.QRadioButton, 'otherRadio')
 		self.testRadioButton = self.findChild(QtWidgets.QRadioButton, 'testRadio')
 		self.penRadioButton = self.findChild(QtWidgets.QRadioButton, 'penRadio')
 		self.tabletRadioButton = self.findChild(QtWidgets.QRadioButton, 'tabletRadio')
 		self.spiralOnlyRadioButton = self.findChild(QtWidgets.QRadioButton, 'spiralOnlyRadio')
-		self.CCWPlotRadio = self.findChild(QtWidgets.QRadioButton, 'ccw_plot_radio')
-		self.CWPlotRadio = self.findChild(QtWidgets.QRadioButton, 'cw_plot_radio')
-		self.LinePlotRadio = self.findChild(QtWidgets.QRadioButton, 'line_plot_radio')
-		self.SFlotRadio = self.findChild(QtWidgets.QRadioButton, 'spatial_freq_plot_radio')
-		self.FreqAccelPlotRadio = self.findChild(QtWidgets.QRadioButton, 'frequency_accel_plot_radio')
-		self.RawAccelPlotRadio = self.findChild(QtWidgets.QRadioButton, 'raw_accel_plot_radio')
-		self.AccelSamplePlotRadio = self.findChild(QtWidgets.QRadioButton, 'accel_sample_plot')
 
 		# Tab Widgets
 		self.aboutCaseWindow = self.findChild(QtWidgets.QWidget, 'aboutCase')
@@ -152,63 +142,33 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.spiralTab = self.findChild(QtWidgets.QWidget, 'spirals_tab')
 
 		# Create the matplotlib canvas
-		self.canvasImprove = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph1 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph2 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph3 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph4 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph5 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph6 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph7 = MplCanvas(self, width=5, height=4, dpi=100)
-		self.canvasGraph8 = MplCanvas(self, width=5, height=4, dpi=100)
+		self.AccelPSDCanvas = MplCanvas(self, width=5, height=4, dpi=100)
+		self.SpiralCCWCanvas = MplCanvas(self, width=5, height=4, dpi=100)
+		self.SpiralCWCanvas = MplCanvas(self, width=5, height=4, dpi=100)
+		self.LineCanvas = MplCanvas(self, width=5, height=4, dpi=100)
 
 		# Graphing Widgets
-		self.improveGraphWidget = self.findChild(QtWidgets.QWidget, 'procedureImprovementGraph')
-		self.graph_widget1 = self.findChild(QtWidgets.QWidget, 'GraphWidget1')
-		self.graph_widget2 = self.findChild(QtWidgets.QWidget, 'GraphWidget2')
-		self.graph_widget3 = self.findChild(QtWidgets.QWidget, 'GraphWidget3')
-		self.graph_widget4 = self.findChild(QtWidgets.QWidget, 'GraphWidget4')
-		self.graph_widget5 = self.findChild(QtWidgets.QWidget, 'GraphWidget5')
-		self.graph_widget6 = self.findChild(QtWidgets.QWidget, 'GraphWidget6')
-		self.graph_widget7 = self.findChild(QtWidgets.QWidget, 'GraphWidget7')
-		self.graph_widget8 = self.findChild(QtWidgets.QWidget, 'GraphWidget8')
+		self.AccelPSDWidget = self.findChild(QtWidgets.QWidget, 'accel_psd_graph')
+		self.SpiralCCWWidget = self.findChild(QtWidgets.QWidget, 'spiral_ccw_graph')
+		self.SpiralCWWidget = self.findChild(QtWidgets.QWidget, 'spiral_cw_graph')
+		self.LineWidget = self.findChild(QtWidgets.QWidget, 'line_graph')
 
 		# Add the graph canvases as layouts
-		layout = QtWidgets.QVBoxLayout(self.improveGraphWidget)
-		layout.addWidget(self.canvasImprove)
-		self.improveGraphWidget.setLayout(layout)
+		layout = QtWidgets.QVBoxLayout(self.AccelPSDWidget)
+		layout.addWidget(self.AccelPSDCanvas)
+		self.AccelPSDWidget.setLayout(layout)
 
-		layout = QtWidgets.QVBoxLayout(self.graph_widget1)
-		layout.addWidget(self.canvasGraph1)
-		self.graph_widget1.setLayout(layout)
+		layout = QtWidgets.QVBoxLayout(self.SpiralCCWWidget)
+		layout.addWidget(self.SpiralCCWCanvas)
+		self.SpiralCCWWidget.setLayout(layout)
 
-		layout = QtWidgets.QVBoxLayout(self.graph_widget2)
-		layout.addWidget(self.canvasGraph2)
-		self.graph_widget2.setLayout(layout)
+		layout = QtWidgets.QVBoxLayout(self.SpiralCWWidget)
+		layout.addWidget(self.SpiralCWCanvas)
+		self.SpiralCWWidget.setLayout(layout)
 
-		layout = QtWidgets.QVBoxLayout(self.graph_widget3)
-		layout.addWidget(self.canvasGraph3)
-		self.graph_widget3.setLayout(layout)
-
-		layout = QtWidgets.QVBoxLayout(self.graph_widget4)
-		layout.addWidget(self.canvasGraph4)
-		self.graph_widget4.setLayout(layout)
-
-		layout = QtWidgets.QVBoxLayout(self.graph_widget5)
-		layout.addWidget(self.canvasGraph5)
-		self.graph_widget5.setLayout(layout)
-
-		layout = QtWidgets.QVBoxLayout(self.graph_widget6)
-		layout.addWidget(self.canvasGraph6)
-		self.graph_widget6.setLayout(layout)
-
-		layout = QtWidgets.QVBoxLayout(self.graph_widget7)
-		layout.addWidget(self.canvasGraph7)
-		self.graph_widget7.setLayout(layout)
-
-		layout = QtWidgets.QVBoxLayout(self.graph_widget8)
-		layout.addWidget(self.canvasGraph8)
-		self.graph_widget8.setLayout(layout)
+		layout = QtWidgets.QVBoxLayout(self.LineWidget)
+		layout.addWidget(self.LineCanvas)
+		self.LineWidget.setLayout(layout)
 
 		# Drawing Area and Buttons for Spiral Drawing Tab
 		self.SpiralCCWArea = self.findChild(QtWidgets.QLabel, 'spiral_ccw_draw')
@@ -270,7 +230,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# List Widgets
 		self.patientList = self.findChild(QtWidgets.QListView, 'prevPatientList')
 		self.accelCasesList = self.findChild(QtWidgets.QListView, 'accelCases')
-		self.currentSpiralsView = self.findChild(QtWidgets.QListView, 'current_spirals_view')
 		self.currentAccelView = self.findChild(QtWidgets.QListView, 'current_accel_view')
 
 		# Add all previous cases in the QListView Object
@@ -285,25 +244,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 	###############################################################################################
 	## Helper Functions
 	###############################################################################################
-
-	# Set the baseline trial
-	def set_accel_baseline(self):
-
-		try:
-			self.currentAccelView.currentItem().text()
-		except:
-			return
-
-		if self.currentAccelView.currentItem().text() == None:
-			return
-
-		for i in range(len(self.accel_files)):
-			if self.currentAccelView.currentItem().text() == self.accel_files[i]:
-				self.accel_baseline = i
-
-		# Set the text in the LINe edit
-		self.baselineTrialLE.setText(self.currentAccelView.currentItem().text())
-
+'''
 	# Function to plot sample data
 	def plot_improvement(self):
 
@@ -601,7 +542,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.canvasGraph6.clear_plot()
 		self.canvasGraph7.clear_plot()
 		self.canvasGraph8.clear_plot()
-
+'''
 	###############################################################################################
 	## Button Click Functions
 	###############################################################################################
@@ -653,9 +594,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.patientIdEnter.setEnabled(True)
 		self.patientIdEnter.setText('')
 		self.trialNameAccelerom.setText('')
-		self.baselineTrialLE.setText('')
-		self.intraopValueFeild.setValue(1)
-		self.preopRadioButton.setChecked(True)
+		self.RHValueFeild.setValue(1)
+		self.LHValueFeild.setValue(1)
+		self.RHRadio.setChecked(True)
 
 		# Add all previous cases in the QListView Object
 		self.prev_pt_list = next(os.walk(self.basePath))[1]
@@ -665,7 +606,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Clear the list views
 		self.accelCasesList.clear()
-		self.currentSpiralsView.clear()
 		self.currentAccelView.clear()
 
 		# Write a txt file that stores the case
@@ -680,12 +620,13 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.line_spirals = []
 		self.accel_psds = []
 		self.accel_trials = []
-		self.intraop_current = 1
+		self.rh_current = 1
+		self.lh_current = 1
 		self.isNewCase = False
 		self.accel_baseline = None
 		self.baseline_f_peak_val = None
 
-		self.clear_all_plots()
+		#self.clear_all_plots()
 
 	# Function to load a previous case
 	def load_case(self):
@@ -734,9 +675,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 						self.baseline_f_peak_val = float(row[1])
 
 			# Plot the accelerometer and the improvment plots
-			self.plot_improvement()
-			self.FreqAccelPlotRadio.setChecked(True)
-			self.plot_accels()
+			#self.plot_improvement()
 
 		# Get the spiral files
 		self.ccw_spirals = []
@@ -752,13 +691,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 					elif line.rstrip()[0:4] == 'line':
 						self.line_spirals.append(line.rstrip()[5:len(line.rstrip())] + '_line')
 
-		# Add entries to the current spirals
-		for item in self.ccw_spirals:
-			self.currentSpiralsView.addItem(item)
-		for item in self.cw_spirals:
-			self.currentSpiralsView.addItem(item)
-		for item in self.line_spirals:
-			self.currentSpiralsView.addItem(item)
+		# Add entries to the current trials
 		for item in self.accel_trials:
 			self.currentAccelView.addItem(item)
 
@@ -775,26 +708,44 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.cancelRecordButton.setEnabled(False)
 		self.resetBoardButton.setEnabled(False)
 
-		# Make sure intraop variables are reset
-		io_fls_s = glob.glob(self.data_save_path + 'intraop*_ccw_spiral.csv')
-		io_fls_a = glob.glob(self.data_save_path + 'intraop*.csv')
-		print(io_fls_s)
-		print(io_fls_a)
+		# Make sure RH variables are reset
+		rh_fls_s = glob.glob(self.data_save_path + 'clinic_rh*_ccw_spiral.csv')
+		rh_fls_a = glob.glob(self.data_save_path + 'clinic_rh*.csv')
+		print(rh_fls_s)
+		print(rh_fls_a)
 
 		ii = 0
-		while ii < len(io_fls_a):
-			print(io_fls_a[ii][len(io_fls_a[ii])-10:len(io_fls_a[ii])-4])
-			if io_fls_a[ii][len(io_fls_a[ii])-10:len(io_fls_a[ii])-4] == 'spiral':
-				io_fls_a.pop(ii)
+		while ii < len(rh_fls_a):
+			print(rh_fls_a[ii][len(rh_fls_a[ii])-10:len(rh_fls_a[ii])-4])
+			if rh_fls_a[ii][len(rh_fls_a[ii])-10:len(rh_fls_a[ii])-4] == 'spiral':
+				rh_fls_a.pop(ii)
 				continue
 			ii += 1
-		print(io_fls_a)
 
-		self.intraop_current = max([len(io_fls_s), len(io_fls_a)]) + 1
-		if self.intraop_current == 0 or self.intraop_current > 15:
-			self.intraop_current = 1
+		self.rh_current = max([len(rh_fls_s), len(rh_fls_a)]) + 1
+		if self.rh_current == 0 or self.rh_current > 15:
+			self.rh_current = 1
 
-		self.intraopValueFeild.setValue(self.intraop_current)
+		# Make sure LH variables are reset
+		rh_fls_s = glob.glob(self.data_save_path + 'clinic_lh*_ccw_spiral.csv')
+		rh_fls_a = glob.glob(self.data_save_path + 'clinic_lh*.csv')
+		print(lh_fls_s)
+		print(lh_fls_a)
+
+		ii = 0
+		while ii < len(lh_fls_a):
+			print(lh_fls_a[ii][len(lh_fls_a[ii])-10:len(lh_fls_a[ii])-4])
+			if lh_fls_a[ii][len(lh_fls_a[ii])-10:len(lh_fls_a[ii])-4] == 'spiral':
+				lh_fls_a.pop(ii)
+				continue
+			ii += 1
+
+		self.lh_current = max([len(lh_fls_s), len(lh_fls_a)]) + 1
+		if self.lh_current == 0 or self.lh_current > 15:
+			self.lh_current = 1
+
+		self.RHValueFeild.setValue(self.rh_current)
+		self.LHValueFeild.setValue(self.lh_current)
 		self.preopRadioButton.setChecked(True)
 
 		# Add any accel trials to the case
@@ -805,14 +756,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 	# Function to start the accelerometer recording
 	def record_accel(self):
 
-		if self.preopRadioButton.isChecked():
-			tmp_str = 'preop'
+		if self.RHRadio.isChecked():
+			tmp_str = 'clinic_rh' + str(self.rh_current)
 
-		elif self.intraopRadioButton.isChecked():
-			tmp_str = 'intraop' + str(self.intraop_current)
-
-		elif self.postopRadioButton.isChecked():
-			tmp_str = 'postop'
+		elif self.LHRadio.isChecked():
+			tmp_str = 'clinic_lh' + str(self.lh_current)
 
 		elif self.otherRadioButton.isChecked():
 			# Check that two trials are not named the same
@@ -845,7 +793,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Update user thatdevice is being set up
 		if not self.spiralOnlyRadioButton.isChecked():
 			self.accelDeviceUpdates.setText('Connecting to device ...')
-			self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+			self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 			# Enable Drawing
 			self.spiralTab.setEnabled(True)
@@ -881,7 +829,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				break
 			else:
 				self.accelDeviceUpdates.setText('Still connecting ...')
-				self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+				self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 				#Force GUI to update (needed due to many sleep() calls associated with BT device)
 				app.processEvents()
@@ -903,7 +851,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Update user that device is being set up
 		self.accelDeviceUpdates.setText('Connected. Setting up device ...')
-		self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+		self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 		#Force GUI to update (needed due to many sleep() calls associated with BT device)
 		app.processEvents()
@@ -946,9 +894,12 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.downloadAccelButton.setEnabled(False)
 			self.cancelRecordButton.setEnabled(False)
 			self.trialNameSelect.setEnabled(True)
-			if self.intraopRadioButton.isChecked():
-				self.intraop_current += 1
-				self.intraopValueFeild.setValue(self.intraop_current)
+			if self.RHRadio.isChecked():
+				self.rh_current += 1
+				self.RHValueFeild.setValue(self.rh_current)
+			if self.LHRadio.isChecked():
+				self.lh_current += 1
+				self.LHValueFeild.setValue(self.lh_current)
 			self.current_trial = ''
 			self.selectDeviceGroup.setEnabled(True)
 
@@ -989,7 +940,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 			# Signal to UI that the data is being downloaded
 			self.accelDeviceUpdates.setText('Reconnecting ...')
-			self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+			self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 			#Force GUI to update (needed due to many sleep() calls associated with BT device)
 			app.processEvents()
@@ -1034,7 +985,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 			# Signal to UI that the data is being downloaded
 			self.accelDeviceUpdates.setText('Done. Reseting BT ...')
-			self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+			self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 			#Force GUI to update (needed due to many sleep() calls associated with BT device)
 			app.processEvents()
@@ -1057,9 +1008,12 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.downloadAccelButton.setEnabled(False)
 			self.cancelRecordButton.setEnabled(False)
 			self.trialNameSelect.setEnabled(True)
-			if self.intraopRadioButton.isChecked():
-				self.intraop_current += 1
-				self.intraopValueFeild.setValue(self.intraop_current)
+			if self.RHRadio.isChecked():
+				self.rh_current += 1
+				self.RHValueFeild.setValue(self.rh_current)
+			if self.LHRadio.isChecked():
+				self.lh_current += 1
+				self.LHValueFeild.setValue(self.lh_current)
 			self.current_trial = ''
 			self.selectDeviceGroup.setEnabled(True)
 
@@ -1097,7 +1051,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		if not self.spiralOnlyRadioButton.isChecked():
 			# Signal to UI that the data is being downloaded
 			self.accelDeviceUpdates.setText('Cancel and Reset...')
-			self.accelDeviceUpdates.setStyleSheet('Color: yellow;')
+			self.accelDeviceUpdates.setStyleSheet('Color: black;')
 
 		# Disable Download and cancel buttons
 		self.downloadAccelButton.setEnabled(False)
