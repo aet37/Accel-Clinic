@@ -73,8 +73,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.accel_psds = []
 		self.rh_current = 1
 		self.lh_current = 1
-		self.accel_baseline = None
-		self.baseline_f_peak_val = None
 
 		# Acclerometer
 		self.accel_address = 'C5:02:6A:76:E4:5D'
@@ -225,7 +223,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Line edits
 		self.accelDeviceUpdates = self.findChild(QtWidgets.QLabel, 'accelDeviceUpdate')
-		self.baselineTrialLE = self.findChild(QtWidgets.QLabel, 'baseline_disp')
 
 		# List Widgets
 		self.patientList = self.findChild(QtWidgets.QListView, 'prevPatientList')
@@ -251,8 +248,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		print('Starting analysis ...')
 
 		# If no trials have been done, return
-		if (len(self.accel_files) == 0) or (self.accel_baseline == None):
-			print('  Could not analyze. No accel files or no baseline selected.')
+		if (len(self.accel_files) == 0):
+			print('  Could not analyze. No accelerometer files.')
 			return
 
 		# Create a directory to save the analysis if it doesnt exist
@@ -432,8 +429,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.rh_current = 1
 		self.lh_current = 1
 		self.isNewCase = False
-		self.accel_baseline = None
-		self.baseline_f_peak_val = None
 
 		#self.clear_all_plots()
 
@@ -465,26 +460,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Get the analyzed psd files
 		self.accel_psds = []
-		self.accel_baseline = None
-		self.baseline_f_peak_val = None
 		if os.path.isdir(self.data_save_path + 'analysis'):
 			# Load the analyzed psd files
 			with open(self.data_save_path + 'analysis/accel_psd_fls.csv') as file:
 				for line in file:
 					self.accel_psds.append(line.rstrip())
-
-			# Load the baseline info
-			with open(self.data_save_path + 'analysis/' + 'accel_baseline_info.csv', newline='') as csvfile:
-				c_reader = csv.reader(csvfile, delimiter=',')
-				for row in c_reader:
-					if row[0] == 'BaselineIndex':
-						self.accel_baseline = int(row[1])
-						self.baselineTrialLE.setText(self.accel_psds[self.accel_baseline])
-					if row[0] == 'BaselineMaxF':
-						self.baseline_f_peak_val = float(row[1])
-
-			# Plot the accelerometer and the improvment plots
-			#self.plot_improvement()
 
 		# Get the spiral files
 		self.ccw_spirals = []
