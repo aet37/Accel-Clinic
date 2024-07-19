@@ -567,7 +567,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.trialNameAccelerom.setEnabled(True)
 			self.downloadAccelButton.setEnabled(False)
 			self.cancelRecordButton.setEnabled(False)
-			self.preopRadioButton.setChecked(True)
+			self.RHRadio.setChecked(True)
 
 			self.isNewCase = True
 
