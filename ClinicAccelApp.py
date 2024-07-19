@@ -114,7 +114,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.resetBoardButton = self.findChild(QtWidgets.QPushButton, 'resetBoard')
 		self.resetBoardButton.clicked.connect(self.handle_reset)
 		self.PlotAccels = self.findChild(QtWidgets.QPushButton, 'plot_accel_aspects')
-		self.PlotAccels.clicked.connect(self.plot_accels)
+		#self.PlotAccels.clicked.connect(self.plot_accels)
 
 		self.recordAccelButton = self.findChild(QtWidgets.QPushButton, 'recordAccel')
 		self.recordAccelButton.clicked.connect(self.record_accel)
