@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1792</width>
+    <height>987</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="CaseViewer">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>1771</width>
+      <height>931</height>
+     </rect>
+    </property>
+    <property name="whatsThis">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="caseSelect">
+     <attribute name="title">
+      <string>Select Case</string>
+     </attribute>
+     <widget class="QPushButton" name="startCase">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>120</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start Case</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="finishCaseButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>170</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Finish Case</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="loadCaseButton">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>590</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Load Case</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>10</y>
+        <width>691</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Enter patient ID or load past case</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="patientIdEnter">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>70</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="prevPatientList">
+      <property name="geometry">
+       <rect>
+        <x>750</x>
+        <y>210</y>
+        <width>251</width>
+        <height>341</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="aboutCase">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="title">
+      <string>View Progress</string>
+     </attribute>
+     <widget class="QTabWidget" name="GraphTab">
+      <property name="geometry">
+       <rect>
+        <x>-10</x>
+        <y>0</y>
+        <width>1781</width>
+        <height>911</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="showGraphTab">
+       <attribute name="title">
+        <string>Graphs</string>
+       </attribute>
+       <widget class="QWidget" name="procedureImprovementGraph" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>601</width>
+          <height>431</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>1020</x>
+          <y>150</y>
+          <width>361</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget1" native="true">
+        <property name="geometry">
+         <rect>
+          <x>620</x>
+          <y>150</y>
+          <width>361</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget3" native="true">
+        <property name="geometry">
+         <rect>
+          <x>1400</x>
+          <y>150</y>
+          <width>351</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget4" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>520</y>
+          <width>341</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget5" native="true">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>520</y>
+          <width>341</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget6" native="true">
+        <property name="geometry">
+         <rect>
+          <x>710</x>
+          <y>520</y>
+          <width>341</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget7" native="true">
+        <property name="geometry">
+         <rect>
+          <x>1060</x>
+          <y>520</y>
+          <width>341</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="GraphWidget8" native="true">
+        <property name="geometry">
+         <rect>
+          <x>1410</x>
+          <y>520</y>
+          <width>351</width>
+          <height>291</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="GraphSettingsTab">
+       <attribute name="title">
+        <string>Graph Settings</string>
+       </attribute>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>980</x>
+          <y>50</y>
+          <width>261</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Spirals</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="current_spirals_view">
+        <property name="geometry">
+         <rect>
+          <x>980</x>
+          <y>110</y>
+          <width>211</width>
+          <height>261</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>980</x>
+          <y>380</y>
+          <width>211</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="ccw_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>CCW Spiral</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="cw_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>111</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>CW Spiral</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="line_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>101</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Line</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="spatial_freq_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>151</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Spatial Frequency</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="plot_spiral_aspects">
+        <property name="geometry">
+         <rect>
+          <x>1030</x>
+          <y>520</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Plot Spirals</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="current_accel_view">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>110</y>
+          <width>211</width>
+          <height>261</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>450</y>
+          <width>211</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="frequency_accel_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>161</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Frequency</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="raw_accel_plot_radio">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>171</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string> Full Timeseries</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="accel_sample_plot">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>171</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Sample Timeseries</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="plot_accel_aspects">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>690</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Plot Accelerometer</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>50</y>
+          <width>261</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Accelerometer</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="set_baseline">
+        <property name="geometry">
+         <rect>
+          <x>500</x>
+          <y>390</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Set as Baseline</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>140</y>
+          <width>121</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current Baseline:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="analyze_accel_data">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>600</y>
+          <width>191</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Analyze Acelerometer</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="baseline_disp">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>190</y>
+          <width>141</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="accelControl">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="title">
+      <string>Trial Setup</string>
+     </attribute>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>0</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>17</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Trial Name</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="recordAccel">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>60</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Record</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="downloadAccel">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>110</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Done</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cancelRecord">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>200</y>
+        <width>111</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel Record</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="accelCases">
+      <property name="geometry">
+       <rect>
+        <x>1010</x>
+        <y>30</y>
+        <width>181</width>
+        <height>171</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="accel_trial_sel">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>60</y>
+        <width>371</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QRadioButton" name="preopRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>121</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>preop</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="intraopRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>121</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>intraop</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="postopRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>postop</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="otherRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>other</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="trialNameAccel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>110</y>
+         <width>161</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="testRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>130</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>test</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="intraopValue">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>50</y>
+         <width>42</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="resetBoard">
+      <property name="geometry">
+       <rect>
+        <x>1580</x>
+        <y>30</y>
+        <width>121</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset BT Board</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="accelDeviceUpdate">
+      <property name="geometry">
+       <rect>
+        <x>1000</x>
+        <y>220</y>
+        <width>701</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Ready for next recording.</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="select_device_group">
+      <property name="geometry">
+       <rect>
+        <x>1230</x>
+        <y>100</y>
+        <width>471</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Select Device</string>
+      </property>
+      <widget class="QRadioButton" name="penRadio">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Pen (Gray)</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="tabletRadio">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Tablet (White)</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="spiralOnlyRadio">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>30</y>
+         <width>191</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>No Accel (Spiral Only)</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="spiralControl">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="title">
+      <string>Draw Spiral</string>
+     </attribute>
+     <widget class="QTabWidget" name="spirals_tab">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-1</y>
+        <width>1771</width>
+        <height>911</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Basic Drawings</string>
+       </attribute>
+       <widget class="QLabel" name="spiral_ccw_draw">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>40</y>
+          <width>561</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>ims/spiral_ccw_big.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="spiral_cw_draw">
+        <property name="geometry">
+         <rect>
+          <x>1080</x>
+          <y>40</y>
+          <width>591</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>ims/spiral_cw_big.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="line_draw">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>670</y>
+          <width>1348</width>
+          <height>140</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>ims/line.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="clear_drawings">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>121</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Clear Drawings</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="done_ccw_button">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>600</y>
+          <width>100</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Done</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="done_cw_button">
+        <property name="geometry">
+         <rect>
+          <x>1300</x>
+          <y>610</y>
+          <width>100</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Done</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="done_line_button">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>830</y>
+          <width>100</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Done</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadp_spiralccw_button">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>600</y>
+          <width>121</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Previous</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadp_spiralcw_button">
+        <property name="geometry">
+         <rect>
+          <x>1470</x>
+          <y>610</y>
+          <width>111</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Previous</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadp_line_button">
+        <property name="geometry">
+         <rect>
+          <x>920</x>
+          <y>830</y>
+          <width>111</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Previous</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Extras</string>
+       </attribute>
+       <widget class="QPushButton" name="clear_drawings2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>131</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Clear Drawings</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1792</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuImaging_Window">
+    <property name="title">
+     <string>HIFU</string>
+    </property>
+   </widget>
+   <addaction name="menuImaging_Window"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
