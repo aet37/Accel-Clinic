@@ -34,23 +34,23 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		if sys.platform == 'win32':
 			print('Windows Detected')
 			if os.path.isdir('C:/hifu/'):
-				self.basePath = 'C:/hifu/HIFU-cases/'
-				self.application_path = 'C:/hifu/Spiral-Drawing/'
+				self.basePath = 'C:/hifu/Clinic-Cases/'
+				self.application_path = 'C:/hifu/Accel-Clinic/'
 			else:
-				self.basePath = 'C:/Users/hifuo/HIFU-cases/'
-				self.application_path = 'C:/Users/hifuo/Spiral-Drawing/'
+				self.basePath = 'C:/Users/hifuo/Clinic-Cases/'
+				self.application_path = 'C:/Users/hifuo/Accel-Clinic/'
 
 		else:
 			tmpdir = os.getcwd()
 			tmpdir = tmpdir.split('/')
-			self.basePath = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/HIFU-cases/'
-			self.application_path = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/Spiral-Drawing/'
+			self.basePath = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/Clinic-Cases/'
+			self.application_path = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/Accel-Clinic/'
 
 		uic.loadUi('spiralDraw.ui', self)
 		self.move(0, 0)
 
 
-		self.setWindowTitle("HIFU Spiral Drawing")
+		self.setWindowTitle("Clinic Accelerometer Application")
 
 		###########################################################################################
 		## Class Variables
