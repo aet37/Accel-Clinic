@@ -503,7 +503,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		ii = 0
 		while ii < len(rh_fls_a):
-			print(rh_fls_a[ii][len(rh_fls_a[ii])-10:len(rh_fls_a[ii])-4])
 			if rh_fls_a[ii][len(rh_fls_a[ii])-10:len(rh_fls_a[ii])-4] == 'spiral':
 				rh_fls_a.pop(ii)
 				continue
@@ -519,7 +518,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		ii = 0
 		while ii < len(lh_fls_a):
-			print(lh_fls_a[ii][len(lh_fls_a[ii])-10:len(lh_fls_a[ii])-4])
 			if lh_fls_a[ii][len(lh_fls_a[ii])-10:len(lh_fls_a[ii])-4] == 'spiral':
 				lh_fls_a.pop(ii)
 				continue
