@@ -33,7 +33,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="caseSelect">
      <attribute name="title">
@@ -197,7 +197,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
@@ -215,7 +215,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
@@ -233,7 +233,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
