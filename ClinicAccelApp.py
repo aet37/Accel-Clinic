@@ -333,11 +333,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			arr_pts_tmp_y = []
 
 			# Get the points in the current spiral
-				with open(self.application_path + 'ims/ideal_ccw_spiral.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						arr_pts_tmp_x.append(int(row[1]))
-						arr_pts_tmp_y.append(int(row[2]))
+			with open(self.application_path + 'ims/ideal_ccw_spiral.csv', newline='') as csvfile:
+				spiral_reader = csv.reader(csvfile, delimiter=',')
+				for row in spiral_reader:
+					arr_pts_tmp_x.append(int(row[1]))
+					arr_pts_tmp_y.append(int(row[2]))
 
 			# Plot the spirals
 			self.SpiralCCWWidget.clear_plot()
