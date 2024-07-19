@@ -1177,15 +1177,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			fl.write('cw_' + self.current_trial + '\n')
 			fl.close()
 
-		# Update the list views of spiral graph settings
-		self.currentSpiralsView.clear()
-		for item in self.ccw_spirals:
-			self.currentSpiralsView.addItem(item)
-		for item in self.cw_spirals:
-			self.currentSpiralsView.addItem(item)
-		for item in self.line_spirals:
-			self.currentSpiralsView.addItem(item)
-
 	def onDoneLine(self):
 		if self.current_trial != '':
 			file_path = self.basePath + self.pt_id + '/' + self.current_trial + '_line_spiral.csv'
