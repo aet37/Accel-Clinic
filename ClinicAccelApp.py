@@ -549,7 +549,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 	# Function to start the case
 	def start_case(self):
-
 		# Get the patient ID, remove all sapces from the ID
 		tmp_ptid= self.patientIdEnter.text()
 		tmp_ptid.replace(' ', '')
