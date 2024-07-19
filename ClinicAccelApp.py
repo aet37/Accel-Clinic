@@ -313,14 +313,14 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Plot the right accelerometer trial
 		f, psd = load_data_accel_psd(self.data_save_path + 'analysis/' + self.accel_psds[to_plot] + '_accel_psd.csv')
 
-		self.AccelPSDWidget.axes.plot(f, psd, color='b')
-		self.AccelPSDWidget.axes.set_xlabel('Frequency (Hz)', fontsize=13)
-		self.AccelPSDWidget.axes.set_ylabel('PSD (G^2/Hz)', fontsize=13)
-		self.AccelPSDWidget.axes.set_xlim(min(f), max(f))
-		self.AccelPSDWidget.axes.set_ylim(0, max(psd) * 2)
-		self.AccelPSDWidget.axes.set_title(self.accel_trials[i] + ', Accel PSD', fontsize=14)
-		self.AccelPSDWidget.axes.grid(True)
-		self.AccelPSDWidget.draw()
+		self.AccelPSDCanvas.axes.plot(f, psd, color='b')
+		self.AccelPSDCanvas.axes.set_xlabel('Frequency (Hz)', fontsize=13)
+		self.AccelPSDCanvas.axes.set_ylabel('PSD (G^2/Hz)', fontsize=13)
+		self.AccelPSDCanvas.axes.set_xlim(min(f), max(f))
+		self.AccelPSDCanvas.axes.set_ylim(0, max(psd) * 2)
+		self.AccelPSDCanvas.axes.set_title(self.accel_trials[i] + ', Accel PSD', fontsize=14)
+		self.AccelPSDCanvas.axes.grid(True)
+		self.AccelPSDCanvas.draw()
 
 		# Plot CCW spiral
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_ccw_spiral.csv'):
@@ -337,18 +337,18 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 					arr_pts_tmp_y.append(int(row[2]))
 
 			# Plot the spirals
-			self.SpiralCCWWidget.clear_plot()
-			self.SpiralCCWWidget.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
-			self.SpiralCCWWidget.draw()
-			self.SpiralCCWWidget.axes.plot(arr_pts_x, arr_pts_y, color='b')
-			self.SpiralCCWWidget.axes.set_title(self.ccw_spirals[i], fontsize=14)
-			self.SpiralCCWWidget.draw()
+			self.SpiralCCWCanvas.clear_plot()
+			self.SpiralCCWCanvas.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+			self.SpiralCCWCanvas.draw()
+			self.SpiralCCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
+			self.SpiralCCWCanvas.axes.set_title(self.ccw_spirals[i], fontsize=14)
+			self.SpiralCCWCanvas.draw()
 
 	def clear_all_plots(self):
-		self.AccelPSDWidget.clear_plot()
-		self.SpiralCCWWidget.clear_plot()
-		self.SpiralCWWidget.clear_plot()
-		self.LineWidget.clear_plot()
+		self.AccelPSDCanvas.clear_plot()
+		self.SpiralCCWCanvas.clear_plot()
+		self.SpiralCWCanvas.clear_plot()
+		self.LineCanvas.clear_plot()
 
 	###############################################################################################
 	## Button Click Functions
