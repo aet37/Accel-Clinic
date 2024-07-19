@@ -1,0 +1,36 @@
+
+Password to Microsoft and gmail accounts:
+Email: hifuohsu1@gmail.com
+Pass: h!fu0h5u
+
+1.) Set up windows with account above. Make sure the device is named 'hifu'. This is necessary for the application to work properly. Change user to hifu if it is not in settings.
+2.) Download python from the 'Microsoft Store' application
+3.) Open 'cmd' application (I like to pin this applicaiton in taskbar) and Type 'python'. The command screen should change to the python shell. If it does this, type quit() to exit
+
+4.) type pip install --upgrade pip in cmd (not in python shell)
+
+5.) Use browser(I like changing to firefox but optional) to download Git at 'gitforwindows.org'. Open and follow steps to install
+	- Note: Unlink linux platforms, you cannot run python files in 'Git Bash'. You must use Git bash to acess github, but you can only run Python files in 'cmd' application
+
+6.) (Optional) Install text editor like Sublime
+
+7.) Open MinGW-64. type 'cd ~', then 'pwd'. It should say '/c/Users/hifuo'
+
+8.) In MinGW-64: type 'git clone https://github.com/aet37/Spiral-Drawing.git'
+
+9.) In MinGW-64: type 'git cone https://github.com/mbientlab/MetaWear-SDK-Python'
+
+10.) I like to add the following shortcuts to the Desktop screen:
+	- scan_connect.py (in Users/hifuo/MetaWear-SDK-Python/examples folder)
+	- SpiralDrawUI.py (in Users/hifuo/Spiral-Drawing) ====>>> THIS IS THE MAIN APPLICAITON! <======
+	- HIFU-cases filder (May only become available after you do your first case. It is in Users/hifuo)
+
+11.) Install all of the prerequsiste modules below using the command 'pip install <package_name>'
+Pip pagages to install (pip install 'package_name')
+
+metawear
+six
+matplotlib
+numpy
+scipy
+PyQt5
