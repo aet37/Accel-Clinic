@@ -244,7 +244,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 	###############################################################################################
 	## Helper Functions
 	###############################################################################################
-'''
+	'''
 	# Function to plot sample data
 	def plot_improvement(self):
 
@@ -542,7 +542,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.canvasGraph6.clear_plot()
 		self.canvasGraph7.clear_plot()
 		self.canvasGraph8.clear_plot()
-'''
+	'''
 	###############################################################################################
 	## Button Click Functions
 	###############################################################################################
