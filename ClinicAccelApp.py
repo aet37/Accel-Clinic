@@ -114,7 +114,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.resetBoardButton = self.findChild(QtWidgets.QPushButton, 'resetBoard')
 		self.resetBoardButton.clicked.connect(self.handle_reset)
 		self.PlotAccels = self.findChild(QtWidgets.QPushButton, 'plot_accel_aspects')
-		#self.PlotAccels.clicked.connect(self.plot_accels)
+		self.PlotAccels.clicked.connect(self.plot_analysis)
 
 		self.recordAccelButton = self.findChild(QtWidgets.QPushButton, 'recordAccel')
 		self.recordAccelButton.clicked.connect(self.record_accel)
@@ -123,7 +123,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.cancelRecordButton = self.findChild(QtWidgets.QPushButton, 'cancelRecord')
 		self.cancelRecordButton.clicked.connect(self.cancel_accel_record)
 		self.analyzeAccelDataButton = self.findChild(QtWidgets.QPushButton, 'analyze_accel_data')
-		#self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
+		self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
 
 
 		# Radio Button
@@ -245,30 +245,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 	## Helper Functions
 	###############################################################################################
 
-	# Function to plot sample data
-	def plot_improvement(self):
-
-		if not os.path.isfile(self.data_save_path + 'analysis/' + 'improvement_accel.csv'):
-			return
-
-		self.canvasImprove.clear_plot()
-
-		x, improve = load_data_accel_psd(self.data_save_path + 'analysis/' + 'improvement_accel.csv')
-
-		for i in range(len(improve)):
-			improve[i] = improve[i] * 100
-
-		self.canvasImprove.axes.plot(x, improve, marker="s", color='r')
-
-		self.canvasImprove.axes.set_xlabel('Sonication', fontsize=13)
-		self.canvasImprove.axes.set_ylabel('Tremor Reduction (%)', fontsize=13)
-		self.canvasImprove.axes.set_title('Tremor Improvement', fontsize=18)
-		self.canvasImprove.axes.set_xlim([min(x), max(x)])
-		self.canvasImprove.axes.set_ylim([-100, 20])
-		self.canvasImprove.axes.legend(['Accelerometer'])
-		self.canvasImprove.axes.grid(True)
-		self.canvasImprove.draw()
-
 	# Analyze the data
 	def analyze_data(self):
 
@@ -311,227 +287,71 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				fl.write(self.accel_trials[i] + '\n')
 				fl.close()
 
-		# Add the baseline trial and the maxinum value of that trial to file to easlity be acessible
-		with open(self.data_save_path + 'analysis/' + 'accel_baseline_info.csv', 'w', newline='') as file:
-			writer = csv.writer(file)
-			writer.writerow(['BaselineIndex', self.accel_baseline])
-			writer.writerow(['BaselineMaxF', peak_vals[self.accel_baseline]])
-
-		# Save the peak val for graphing frequency
-		self.baseline_f_peak_val = peak_vals[self.accel_baseline]
-
 		# Collate the improvement
 		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels])
-		ref_vals = all_accel_stats[:, self.accel_baseline]
-		improve_accel_all = all_accel_stats / ref_vals[:, None] - 1
-		improve_accel = np.mean(improve_accel_all, axis=0)
 
 		# Write the improvement data to file
-		with open(self.data_save_path + 'analysis/' + 'improvement_accel.csv', 'w', newline='') as file:
+		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
-				for j in range(len(improve_accel)):
-					writer.writerow([j, improve_accel[j]])
+				for j in range(all_accel_stats.shape[0]):
+					writer.writerow([all_accel_stats[j][0], all_accel_stats[j][1], all_accel_stats[j][2]])
 		print('  Done.')
 
 		# Plot the accelerometer and the improvment plots
-		self.plot_improvement()
-		self.FreqAccelPlotRadio.setChecked(True)
-		self.plot_accels()
+		self.plot_analysis()
 
 	# Plot the acelerometer data
-	def plot_accels(self):
-		# Clear all plots
-		self.clear_small_plots()
+	def plot_analysis(self, to_plot='last'):
 
-		# Plot the entire timeseries
-		if self.RawAccelPlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.accel_trials)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
+		# If nothing to plot
+		if len(self.accel_psds) == 0:
+			return
 
-				t, x, y, z = load_data_accel(self.data_save_path + self.accel_trials[i] + '.csv')
-				to_plot = []
-				for j in range(len(x)):
-					to_plot.append(x[j] + y[j] + z[j])
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(t, to_plot, color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_xlabel(\'Time (s)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_ylabel(\'Acceleration (G)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.accel_trials[i] + \', Full Accel Trace\', fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.grid(True)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-		elif self.AccelSamplePlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.accel_trials)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
-
-				t, x, y, z = load_data_accel(self.data_save_path + self.accel_trials[i] + '.csv')
-				to_plot = []
-				for j in range(len(x)):
-					to_plot.append(x[j] + y[j] + z[j])
-				if len(to_plot) > 500:
-					ind_plot_min = 400
-					ind_plot_max = 500
-				elif len(to_plot) >= 103:
-					ind_plot_min = 2
-					ind_plot_max = 102
-				else:
-					continue
-
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(t[ind_plot_min:ind_plot_max], to_plot[ind_plot_min:ind_plot_max], color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_xlabel(\'Time (s)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_ylabel(\'Acceleration (G)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.accel_trials[i] + \', 1s of Accel Trace\', fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.grid(True)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-		elif self.FreqAccelPlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.accel_psds)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
-
-				f, psd = load_data_accel_psd(self.data_save_path + 'analysis/' + self.accel_psds[i] + '_accel_psd.csv')
-
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(f, psd, color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_xlabel(\'Frequency (Hz)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_ylabel(\'PSD (G^2/Hz)\', fontsize=13)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_xlim(min(f), max(f))')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_ylim(0, self.baseline_f_peak_val * 2)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.accel_trials[i] + \', Accel PSD\', fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.grid(True)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-
-	# Plot the spiral data
-	def plot_spirals(self):
+		if to_plot == 'last':
+			to_plot = len(self.accel_psds) - 1
 
 		# Clear all plots
-		self.clear_small_plots()
+		self.clear_all_plots()
 
-		# If want to plot CCW spiral
-		if self.CCWPlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.ccw_spirals)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
+		# Plot the right accelerometer trial
+		f, psd = load_data_accel_psd(self.data_save_path + 'analysis/' + self.accel_psds[to_plot] + '_accel_psd.csv')
 
-				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.ccw_spirals[i] + '_spiral.csv')
+		self.AccelPSDWidget.axes.plot(f, psd, color='b')
+		self.AccelPSDWidget.axes.set_xlabel('Frequency (Hz)', fontsize=13)
+		self.AccelPSDWidget.axes.set_ylabel('PSD (G^2/Hz)', fontsize=13)
+		self.AccelPSDWidget.axes.set_xlim(min(f), max(f))
+		self.AccelPSDWidget.axes.set_ylim(0, max(psd) * 2)
+		self.AccelPSDWidget.axes.set_title(self.accel_trials[i] + ', Accel PSD', fontsize=14)
+		self.AccelPSDWidget.axes.grid(True)
+		self.AccelPSDWidget.draw()
 
-				arr_pts_tmp_x = []
-				arr_pts_tmp_y = []
-				# Get the points in the current spiral
+		# Plot CCW spiral
+		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_ccw_spiral.csv'):
+			arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_ccw_spiral.csv')
+
+			arr_pts_tmp_x = []
+			arr_pts_tmp_y = []
+
+			# Get the points in the current spiral
 				with open(self.application_path + 'ims/ideal_ccw_spiral.csv', newline='') as csvfile:
 					spiral_reader = csv.reader(csvfile, delimiter=',')
 					for row in spiral_reader:
 						arr_pts_tmp_x.append(int(row[1]))
 						arr_pts_tmp_y.append(int(row[2]))
 
-				# Plot the spirals
-				eval('self.canvasGraph' + str((i+1)) + '.clear_plot()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color=\'r\')')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_x, arr_pts_y, color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.ccw_spirals[i], fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-		elif self.CWPlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.cw_spirals)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
-
-				arr_pts_x = []
-				arr_pts_y = []
-				# Get the points in the current spiral
-				with open(self.data_save_path + self.cw_spirals[i] + '_spiral.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						if row[1] != 'X':
-							arr_pts_x.append(int(row[1]))
-							arr_pts_y.append(int(row[2]))
-
-				arr_pts_tmp_x = []
-				arr_pts_tmp_y = []
-				# Get the points in the current spiral
-				with open(self.application_path + 'ims/ideal_cw_spiral.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						arr_pts_tmp_x.append(int(row[1]))
-						arr_pts_tmp_y.append(int(row[2]))
-
-				# Plot the spirals
-				eval('self.canvasGraph' + str((i+1)) + '.clear_plot()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color=\'r\')')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_x, arr_pts_y, color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.cw_spirals[i], fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-		elif self.LinePlotRadio.isChecked():
-			# Loop through all spirals drawn so far
-			for i in range(len(self.line_spirals)):
-				# Only 7 graphs. Cannot plot more.
-				if i > 7:
-					break
-
-				arr_pts_x = []
-				arr_pts_y = []
-				# Get the points in the current spiral
-				with open(self.data_save_path + self.line_spirals[i] + '_spiral.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						if row[1] != 'X':
-							arr_pts_x.append(int(row[1]))
-							arr_pts_y.append(int(row[2]))
-
-				arr_pts_tmpu_x = []
-				arr_pts_tmpu_y = []
-				arr_pts_tmpl_x = []
-				arr_pts_tmpl_y = []
-				# Get the points in the current spiral
-				with open(self.application_path + 'ims/line_ideal_upper.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						arr_pts_tmpu_x.append(int(row[1]))
-						arr_pts_tmpu_y.append(int(row[2]))
-
-				with open(self.application_path + 'ims/line_ideal_lower.csv', newline='') as csvfile:
-					spiral_reader = csv.reader(csvfile, delimiter=',')
-					for row in spiral_reader:
-						arr_pts_tmpl_x.append(int(row[1]))
-						arr_pts_tmpl_y.append(int(row[2]))
-
-				# Plot the spirals
-				eval('self.canvasGraph' + str((i+1)) + '.clear_plot()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color=\'r\')')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color=\'r\')')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.plot(arr_pts_x, arr_pts_y, color=\'b\')')
-				eval('self.canvasGraph' + str((i+1)) + '.axes.set_title(self.line_spirals[i], fontsize=14)')
-				eval('self.canvasGraph' + str((i+1)) + '.draw()')
-
-		elif self.SFlotRadio.isChecked():
-			return
+			# Plot the spirals
+			self.SpiralCCWWidget.clear_plot()
+			self.SpiralCCWWidget.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+			self.SpiralCCWWidget.draw()
+			self.SpiralCCWWidget.axes.plot(arr_pts_x, arr_pts_y, color='b')
+			self.SpiralCCWWidget.axes.set_title(self.ccw_spirals[i], fontsize=14)
+			self.SpiralCCWWidget.draw()
 
 	def clear_all_plots(self):
-		self.canvasImprove.clear_plot()
-		self.canvasGraph1.clear_plot()
-		self.canvasGraph2.clear_plot()
-		self.canvasGraph3.clear_plot()
-		self.canvasGraph4.clear_plot()
-		self.canvasGraph5.clear_plot()
-		self.canvasGraph6.clear_plot()
-		self.canvasGraph7.clear_plot()
-		self.canvasGraph8.clear_plot()
+		self.AccelPSDWidget.clear_plot()
+		self.SpiralCCWWidget.clear_plot()
+		self.SpiralCWWidget.clear_plot()
+		self.LineWidget.clear_plot()
 
 	###############################################################################################
 	## Button Click Functions
