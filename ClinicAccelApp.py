@@ -710,8 +710,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Make sure RH variables are reset
 		rh_fls_s = glob.glob(self.data_save_path + 'clinic_rh*_ccw_spiral.csv')
 		rh_fls_a = glob.glob(self.data_save_path + 'clinic_rh*.csv')
-		print(rh_fls_s)
-		print(rh_fls_a)
 
 		ii = 0
 		while ii < len(rh_fls_a):
@@ -728,8 +726,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Make sure LH variables are reset
 		lh_fls_s = glob.glob(self.data_save_path + 'clinic_lh*_ccw_spiral.csv')
 		lh_fls_a = glob.glob(self.data_save_path + 'clinic_lh*.csv')
-		print(lh_fls_s)
-		print(lh_fls_a)
 
 		ii = 0
 		while ii < len(lh_fls_a):
