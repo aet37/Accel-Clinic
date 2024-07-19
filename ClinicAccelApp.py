@@ -123,7 +123,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.cancelRecordButton = self.findChild(QtWidgets.QPushButton, 'cancelRecord')
 		self.cancelRecordButton.clicked.connect(self.cancel_accel_record)
 		self.analyzeAccelDataButton = self.findChild(QtWidgets.QPushButton, 'analyze_accel_data')
-		self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
+		#self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
 
 
 		# Radio Button
