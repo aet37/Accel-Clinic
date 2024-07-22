@@ -104,7 +104,7 @@ def analyze_accel_data(t_pa, x_pa, y_pa, z_pa):
 	peak_val = round(max(welch_accel_ret), 5)
 	auc_welch = round(np.trapz(welch_accel_ret), 5)
 	auc_accel = round(np.trapz(abs(accel_data_filt)) / len(accel_data_filt), 5)
-	f_max = round(f(max(welch_accel_ret, key=values.__getitem__)), 3)
+	f_max = round(f(max(range(len(welch_accel_ret)), key=welch_accel_ret.__getitem__)), 3)
 
 	return f_filt_ret, welch_accel_ret, peak_val, auc_welch, f_max, auc_accel
 
