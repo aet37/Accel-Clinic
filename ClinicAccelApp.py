@@ -305,7 +305,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			return
 		else:
 			print(self.currentAccelView.currentItem().text())
-			print(self.currentAccelView.currentIndex().text())
+			print(self.currentAccelView.currentIndex().column())
 
 
 	# Plot the acelerometer data
