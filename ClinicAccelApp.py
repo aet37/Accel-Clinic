@@ -301,8 +301,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 	# Plot according to the selected item in box
 	def plot_selected(self):
-		print(self.currentAccelView.currentItem().text())
-		print(self.currentAccelView.currentItem().indexOf())
+		if self.currentAccelView.currentItem() is None:
+			return
+		else:
+			print(self.currentAccelView.currentItem().text())
+			print(self.currentAccelView.currentItem().indexOf())
 
 
 	# Plot the acelerometer data
