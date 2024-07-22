@@ -112,7 +112,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.resetBoardButton = self.findChild(QtWidgets.QPushButton, 'resetBoard')
 		self.resetBoardButton.clicked.connect(self.handle_reset)
 		self.PlotAccels = self.findChild(QtWidgets.QPushButton, 'plot_accel_aspects')
-		self.PlotAccels.clicked.connect(self.plot_analysis)
+		self.PlotAccels.clicked.connect(self.plot_selected)
 
 		self.recordAccelButton = self.findChild(QtWidgets.QPushButton, 'recordAccel')
 		self.recordAccelButton.clicked.connect(self.record_accel)
@@ -298,6 +298,12 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Plot the accelerometer and the improvment plots
 		self.plot_analysis()
+
+	# Plot according to the selected item in box
+	def plot_selected(self):
+		print(self.currentAccelView.currentItem().text())
+		print(self.currentAccelView.currentItem().indexOf())
+
 
 	# Plot the acelerometer data
 	def plot_analysis(self, to_plot='last'):
