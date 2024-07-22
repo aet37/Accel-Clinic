@@ -286,7 +286,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Collate the improvement
 		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels])
-		print(all_accel_stats)
 
 		# Write the improvement data to file
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
@@ -341,6 +340,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Display the spiral statistics on the screen
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
 			spiral_reader = csv.reader(csvfile, delimiter=',')
+			print(len(spiral_reader))
 			for row in spiral_reader:
 				display_statistics.append(float(row[to_plot]))
 

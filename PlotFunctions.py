@@ -101,9 +101,9 @@ def analyze_accel_data(t_pa, x_pa, y_pa, z_pa):
 	welch_accel_ret = welch_accel_filt_sm[idx]
 
 	# Get statstics of accel trace
-	peak_val = round(max(welch_accel_ret), 3)
-	auc_welch = round(np.trapz(welch_accel_ret), 3)
-	auc_accel = round(np.trapz(abs(accel_data_filt)) / len(accel_data_filt), 3)
+	peak_val = round(max(welch_accel_ret), 5)
+	auc_welch = round(np.trapz(welch_accel_ret), 5)
+	auc_accel = round(np.trapz(abs(accel_data_filt)) / len(accel_data_filt), 5)
 
 	return f_filt_ret, welch_accel_ret, peak_val, auc_welch, auc_accel
 
