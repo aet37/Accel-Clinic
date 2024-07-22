@@ -267,7 +267,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			t, x, y, z = load_data_accel(self.data_save_path + self.accel_trials[i] + '.csv')
 
 			# Complete fourier and analysis of the data
-			f, accel_welch, peak_val, auc_welch, f_max, auc_accel = analyze_accel_data(t, x, y, z)
+			f, accel_welch, peak_val, auc_welch, auc_accel = analyze_accel_data(t, x, y, z)
 
 			print(f_max)
 
