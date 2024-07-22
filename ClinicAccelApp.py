@@ -267,7 +267,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			t, x, y, z = load_data_accel(self.data_save_path + self.accel_trials[i] + '.csv')
 
 			# Complete fourier and analysis of the data
-			f, accel_welch, peak_val, auc_welch, auc_accel = analyze_accel_data(t, x, y, z)
+			f, accel_welch, peak_val, auc_welch, f_max, auc_accel = analyze_accel_data(t, x, y, z)
+
+			print(f_max)
 
 			peak_vals = np.append(peak_vals, peak_val)
 			auc_welchs = np.append(auc_welchs, auc_welch)
@@ -342,7 +344,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			spiral_reader = csv.reader(csvfile, delimiter=',')
 			for row in spiral_reader:
 				if spiral_reader.line_num - 1 == to_plot:
-					display_statistics = row
+					display_statistics.append(float(row[0]))
+					display_statistics.append(float(row[1]))
+
 
 		print(display_statistics)
 
