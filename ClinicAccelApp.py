@@ -303,11 +303,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		if self.currentAccelView.currentItem() is None:
 			return
 		else:
-			print('Analyzed. Plot')
 			if os.path.isfile(self.data_save_path + 'analysis/' + self.currentAccelView.currentItem().text() + '_accel_psd.csv'):
 				self.plot_analysis(self.currentAccelView.currentIndex().row())
 			else:
-				print('Analyze then plot')
 				self.analyze_data()
 				self.plot_analysis(self.currentAccelView.currentIndex().row())
 
@@ -336,6 +334,16 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.AccelPSDCanvas.axes.set_title(self.accel_trials[to_plot] + ', Accel PSD', fontsize=14)
 		self.AccelPSDCanvas.axes.grid(True)
 		self.AccelPSDCanvas.draw()
+
+		display_statistics = []
+
+		# Display the spiral statistics on the screen
+		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
+			spiral_reader = csv.reader(csvfile, delimiter=',')
+			for row in spiral_reader:
+				display_statistics.append(float(row[to_plot]))
+
+		print(display_statistics)
 
 		# Plot CCW spiral
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_ccw_spiral.csv'):
