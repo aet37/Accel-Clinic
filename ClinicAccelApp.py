@@ -269,8 +269,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			# Complete fourier and analysis of the data
 			f, accel_welch, peak_val, auc_welch, auc_accel = analyze_accel_data(t, x, y, z)
 
-			print(f_max)
-
 			peak_vals = np.append(peak_vals, peak_val)
 			auc_welchs = np.append(auc_welchs, auc_welch)
 			auc_accels = np.append(auc_accels, auc_accel)
