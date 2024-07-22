@@ -290,7 +290,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Write the improvement data to file
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
-				print(all_accel_stats.shape)
 				for j in range(all_accel_stats.shape[1]):
 					writer.writerow([all_accel_stats[0][j], all_accel_stats[1][j], all_accel_stats[2][j]])
 
