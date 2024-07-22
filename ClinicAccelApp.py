@@ -881,6 +881,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			app.processEvents()
 
 			print('. Done.... Ready for next trial')
+
+			# Analyze and plot the data
+			self.analyze_data()
 		else:
 			# Signal to UI that the data is being downloaded
 			self.accelDeviceUpdates.setText('Download failed. Try again.')
