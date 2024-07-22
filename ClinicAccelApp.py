@@ -294,15 +294,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				for j in range(all_accel_stats.shape[1]):
 					writer.writerow([all_accel_stats[0][j], all_accel_stats[1][j], all_accel_stats[2][j]])
 
-				'''
-				if len(all_accel_stats.shape) == 2:
-					for j in range(all_accel_stats.shape[0]):
-						writer.writerow([all_accel_stats[j][0], all_accel_stats[j][1], all_accel_stats[j][2]])
-				else:
-					for j in range(all_accel_stats.shape[0]):
-						writer.writerow([all_accel_stats[0], all_accel_stats[1], all_accel_stats[2]])
-				'''
-
 		print('  Done.')
 
 		# Plot the accelerometer and the improvment plots
@@ -354,6 +345,58 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.SpiralCCWCanvas.axes.set_title('CCW Spiral', fontsize=14)
 			self.SpiralCCWCanvas.draw()
+
+		# CW
+		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv'):
+			arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv')
+
+			arr_pts_tmp_x = []
+			arr_pts_tmp_y = []
+
+			with open(self.application_path + 'ims/ideal_cw_spiral.csv', newline='') as csvfile:
+				spiral_reader = csv.reader(csvfile, delimiter=',')
+				for row in spiral_reader:
+					arr_pts_tmp_x.append(int(row[1]))
+					arr_pts_tmp_y.append(int(row[2]))
+
+			self.SpiralCWCanvas.clear_plot()
+			self.SpiralCWCanvas.axes.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+			self.SpiralCWCanvas.draw()
+			self.SpiralCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
+			self.SpiralCWCanvas.axes.set_title('CW Spiral', fontsize=14)
+			self.SpiralCWCanvas.draw()
+
+		# Line
+		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv'):
+			arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv')
+
+			arr_pts_tmpu_x = []
+			arr_pts_tmpu_y = []
+			arr_pts_tmpl_x = []
+			arr_pts_tmpl_y = []
+			# Get the points in the current spiral
+			with open(self.application_path + 'ims/line_ideal_upper.csv', newline='') as csvfile:
+				spiral_reader = csv.reader(csvfile, delimiter=',')
+				for row in spiral_reader:
+					arr_pts_tmpu_x.append(int(row[1]))
+					arr_pts_tmpu_y.append(int(row[2]))
+
+			with open(self.application_path + 'ims/line_ideal_lower.csv', newline='') as csvfile:
+				spiral_reader = csv.reader(csvfile, delimiter=',')
+				for row in spiral_reader:
+					arr_pts_tmpl_x.append(int(row[1]))
+					arr_pts_tmpl_y.append(int(row[2]))
+
+			self.LineCanvas.clear_plot()
+			self.LineCanvas.axes.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color='r')
+			self.LineCanvas.draw()
+			self.LineCanvas.axes.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
+			self.LineCanvas.draw()
+			self.LineCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
+			self.LineCanvas.axes.set_title('Line', fontsize=14)
+			self.LineCanvas.draw()
+
+
 
 	def clear_all_plots(self):
 		self.AccelPSDCanvas.clear_plot()
@@ -441,7 +484,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.lh_current = 1
 		self.isNewCase = False
 
-		#self.clear_all_plots()
+		self.clear_all_plots()
 
 	# Function to load a previous case
 	def load_case(self):
