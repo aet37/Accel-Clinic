@@ -340,9 +340,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Display the spiral statistics on the screen
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
 			spiral_reader = csv.reader(csvfile, delimiter=',')
-			print(len(spiral_reader))
 			for row in spiral_reader:
 				display_statistics.append(float(row[to_plot]))
+				print(len(spiral_reader.line_num))
 
 		print(display_statistics)
 
