@@ -285,7 +285,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				fl.close()
 
 		# Collate the improvement
-		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels])
+		all_accel_stats = np.hstack([peak_vals, auc_welchs, auc_accels])
 
 		# Write the improvement data to file
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
