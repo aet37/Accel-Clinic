@@ -342,7 +342,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			spiral_reader = csv.reader(csvfile, delimiter=',')
 			for row in spiral_reader:
 				display_statistics.append(float(row[to_plot]))
-				print(len(spiral_reader.line_num))
+				print(spiral_reader.line_num())
 
 		print(display_statistics)
 
