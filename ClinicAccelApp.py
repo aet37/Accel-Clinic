@@ -285,18 +285,23 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				fl.close()
 
 		# Collate the improvement
-		all_accel_stats = np.hstack([peak_vals, auc_welchs, auc_accels])
+		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels])
 
 		# Write the improvement data to file
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
 				print(all_accel_stats.shape)
+				for j in range(all_accel_stats.shape[0]):
+					writer.writerow([all_accel_stats[0][j], all_accel_stats[1][j], all_accel_stats[2][j]])
+
+				'''
 				if len(all_accel_stats.shape) == 2:
 					for j in range(all_accel_stats.shape[0]):
 						writer.writerow([all_accel_stats[j][0], all_accel_stats[j][1], all_accel_stats[j][2]])
 				else:
 					for j in range(all_accel_stats.shape[0]):
 						writer.writerow([all_accel_stats[0], all_accel_stats[1], all_accel_stats[2]])
+				'''
 
 		print('  Done.')
 
