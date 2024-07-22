@@ -304,9 +304,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		if self.currentAccelView.currentItem() is None:
 			return
 		else:
-			print(self.currentAccelView.currentItem().text())
-			print(self.currentAccelView.currentIndex().column())
-
+			self.plot_analysis(self.currentAccelView.currentIndex().column())
 
 	# Plot the acelerometer data
 	def plot_analysis(self, to_plot='last'):
