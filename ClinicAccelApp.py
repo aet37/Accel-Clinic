@@ -304,7 +304,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			return
 		else:
 			print('Analyzed. Plot')
-			if os.path.isfile(self.data_save_path + 'analysis/' + self.currentAccelView.currentItem().text() + '_accel_psd.csv')
+			if os.path.isfile(self.data_save_path + 'analysis/' + self.currentAccelView.currentItem().text() + '_accel_psd.csv'):
 				self.plot_analysis(self.currentAccelView.currentIndex().row())
 			else:
 				print('Analyze then plot')
