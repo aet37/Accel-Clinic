@@ -341,8 +341,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
 			spiral_reader = csv.reader(csvfile, delimiter=',')
 			for row in spiral_reader:
-				display_statistics.append(float(row[to_plot]))
-				print(spiral_reader.line_num)
+				if spiral_reader.line_num - 1 == to_plot
+				display_statistics = row
 
 		print(display_statistics)
 
