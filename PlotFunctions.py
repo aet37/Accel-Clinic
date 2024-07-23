@@ -1,7 +1,7 @@
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import numpy as np
-from scipy.signal import butter, lfilter, freqz, welch
+from scipy.signal import butter, lfilter, freqz, welch, find_peaks
 import csv
 
 class MplCanvas(FigureCanvas):
@@ -104,10 +104,15 @@ def analyze_accel_data(t_pa, x_pa, y_pa, z_pa):
 	peak_val = round(max(welch_accel_ret), 5)
 	auc_welch = round(np.trapz(welch_accel_ret), 5)
 	auc_accel = round(np.trapz(abs(accel_data_filt)) / len(accel_data_filt), 5)
-	#f_max = round(f_filt(np.argmax(welch_accel_ret)), 3)
+	f_max = round(f_filt_ret(np.argmax(welch_accel_ret)), 3)
 
-	#return f_filt_ret, welch_accel_ret, peak_val, auc_welch, f_max, auc_accel
-	return f_filt_ret, welch_accel_ret, peak_val, auc_welch, auc_accel
+	# Get P-P Amplitude
+	max_pks = find_peaks(accel_data_filt)
+	min_peaks = -find_peaks(-accel_data_filt)
+	peak_peak = round(np.mean(max_pks - min_peaks), 5)
+
+	return f_filt_ret, welch_accel_ret, peak_val, auc_welch, f_max, auc_accel, peak_peak
+	#return f_filt_ret, welch_accel_ret, peak_val, auc_welch, auc_accel
 
 
 

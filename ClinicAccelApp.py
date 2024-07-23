@@ -260,6 +260,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		peak_vals = np.array([])
 		auc_welchs = np.array([])
 		auc_accels = np.array([])
+		f_maxs = np.array([])
+		peak_peaks = np.array([])
 
 		# Analyze the accelerometer data
 		for i in range(len(self.accel_trials)):
@@ -267,11 +269,13 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			t, x, y, z = load_data_accel(self.data_save_path + self.accel_trials[i] + '.csv')
 
 			# Complete fourier and analysis of the data
-			f, accel_welch, peak_val, auc_welch, auc_accel = analyze_accel_data(t, x, y, z)
+			f, accel_welch, peak_val, auc_welch, f_max, auc_accel, peak_peak = analyze_accel_data(t, x, y, z)
 
 			peak_vals = np.append(peak_vals, peak_val)
 			auc_welchs = np.append(auc_welchs, auc_welch)
 			auc_accels = np.append(auc_accels, auc_accel)
+			f_maxs = np.append(f_maxs, f_max)
+			f_maxs = np.append(peak_peaks, peak_peak)
 
 			with open(self.data_save_path + 'analysis/' + self.accel_trials[i] + '_accel_psd.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
@@ -285,13 +289,13 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				fl.close()
 
 		# Collate the improvement
-		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels])
+		all_accel_stats = np.vstack([peak_vals, auc_welchs, auc_accels, peak_peaks, f_maxs])
 
 		# Write the improvement data to file
 		with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
 				for j in range(all_accel_stats.shape[1]):
-					writer.writerow([all_accel_stats[0][j], all_accel_stats[1][j], all_accel_stats[2][j]])
+					writer.writerow([all_accel_stats[0][j], all_accel_stats[1][j], all_accel_stats[2][j], all_accel_stats[3][j], all_accel_stats[4][j]])
 
 		print('  Done.')
 
@@ -344,6 +348,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				if spiral_reader.line_num - 1 == to_plot:
 					display_statistics.append(float(row[0]))
 					display_statistics.append(float(row[1]))
+					display_statistics.append(float(row[3]))
+					display_statistics.append(float(row[4]))
 
 
 		print(display_statistics)
