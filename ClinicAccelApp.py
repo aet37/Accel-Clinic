@@ -226,6 +226,10 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Line edits
 		self.accelDeviceUpdates = self.findChild(QtWidgets.QLabel, 'accelDeviceUpdate')
+		self.peakEnergyDisp = self.findChild(QtWidgets.QLabel, 'peak_energy_disp')
+		self.peakFreqencyDisp = self.findChild(QtWidgets.QLabel, 'peak_frequency_disp')
+		self.aucDisp = self.findChild(QtWidgets.QLabel, 'auc_disp')
+		self.peakPeakDisp = self.findChild(QtWidgets.QLabel, 'peak_peak_disp')
 
 		# List Widgets
 		self.patientList = self.findChild(QtWidgets.QListView, 'prevPatientList')
@@ -354,8 +358,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 					display_statistics.append(round(float(row[3]), 3))
 					display_statistics.append(float(row[4]))
 
-
-		print(display_statistics)
+		# Show the display statistics
+		self.peakEnergyDisp.setText(str(display_statistics[0]))
+		self.peakFreqencyDisp.setText(str(display_statistics[3]))
+		self.aucDisp.setText(str(display_statistics[1]))
+		self.peakPeakDisp.setText(str(display_statistics[2]))
 
 		# Plot CCW spiral
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_ccw_spiral.csv'):
@@ -1084,6 +1091,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.drawingAreaCCW.clearDrawing()
 		self.drawingAreaCW.clearDrawing()
 		self.drawingAreaLine.clearDrawing()
+
+		self.peakEnergyDisp.setText('')
+		self.peakFreqencyDisp.setText('')
+		self.aucDisp.setText('')
+		self.peakPeakDisp.setText('')
 
 # Start UI
 window = spiralDrawSystem()
