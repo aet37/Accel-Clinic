@@ -444,6 +444,11 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.SpiralCWCanvas.clear_plot()
 		self.LineCanvas.clear_plot()
 
+		self.peakEnergyDisp.setText('')
+		self.peakFreqencyDisp.setText('')
+		self.aucDisp.setText('')
+		self.peakPeakDisp.setText('')
+
 	###############################################################################################
 	## Button Click Functions
 	###############################################################################################
@@ -1091,11 +1096,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.drawingAreaCCW.clearDrawing()
 		self.drawingAreaCW.clearDrawing()
 		self.drawingAreaLine.clearDrawing()
-
-		self.peakEnergyDisp.setText('')
-		self.peakFreqencyDisp.setText('')
-		self.aucDisp.setText('')
-		self.peakPeakDisp.setText('')
 
 # Start UI
 window = spiralDrawSystem()
