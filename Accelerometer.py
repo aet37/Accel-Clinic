@@ -205,7 +205,7 @@ class Accelerometer:
 		self.write_ind = 0
 		return True
 
-	def scan_connect(self, addr):
+	def scan_connect(self):
 		BleScanner.start()
 		sleep(5)
 		BleScanner.stop()
