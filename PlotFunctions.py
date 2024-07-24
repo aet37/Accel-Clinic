@@ -108,10 +108,14 @@ def analyze_accel_data(t_pa, x_pa, y_pa, z_pa):
 
 	# Get P-P Amplitude
 	max_pks, _ = find_peaks(accel_data_filt)
+	print(max_pks)
 	max_pks = np.mean(max_pks)
+	print(max_pks)
 	neg_pks, _ = find_peaks(np.negative(accel_data_filt))
 	min_pks = np.negative(neg_pks)
+	print(min_pks)
 	min_pks = np.mean(min_pks)
+	print(min_pks)
 	peak_peak = round(max_pks - min_pks, 5)
 	print(peak_peak)
 
