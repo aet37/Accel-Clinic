@@ -208,7 +208,7 @@ class Accelerometer:
 	def scan_connect(self, addr):
 		BleScanner.start()
 		sleep(5)
-		 BleScanner.stop()
+		BleScanner.stop()
 
 	def full_reset(self):
 		try:
