@@ -278,7 +278,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			auc_welchs = np.append(auc_welchs, auc_welch)
 			auc_accels = np.append(auc_accels, auc_accel)
 			f_maxs = np.append(f_maxs, f_max)
-			f_maxs = np.append(peak_peaks, peak_peak)
+			peak_peaks = np.append(peak_peaks, peak_peak)
 
 			with open(self.data_save_path + 'analysis/' + self.accel_trials[i] + '_accel_psd.csv', 'w', newline='') as file:
 				writer = csv.writer(file)
