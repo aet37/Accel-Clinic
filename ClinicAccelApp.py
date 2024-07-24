@@ -579,7 +579,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.trialNameAccelerom.setEnabled(True)
 		self.downloadAccelButton.setEnabled(False)
 		self.cancelRecordButton.setEnabled(False)
-		self.resetBoardButton.setEnabled(False)
+		self.resetBoardButton.setEnabled(True)
 
 		# Make sure RH variables are reset
 		rh_fls_s = glob.glob(self.data_save_path + 'clinic_rh*_ccw_spiral.csv')
