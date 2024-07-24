@@ -33,7 +33,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="caseSelect">
      <attribute name="title">
@@ -348,7 +348,7 @@
          <string>Peak-Peak (G):</string>
         </property>
        </widget>
-       <widget class="QLabel" name="p">
+       <widget class="QLabel" name="peak_peak_disp">
         <property name="geometry">
          <rect>
           <x>810</x>
