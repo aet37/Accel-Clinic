@@ -205,6 +205,11 @@ class Accelerometer:
 		self.write_ind = 0
 		return True
 
+	def scan_connect(self, addr):
+		BleScanner.start()
+		sleep(5)
+		 BleScanner.stop()
+
 	def full_reset(self):
 		try:
 			# Stops data logging
