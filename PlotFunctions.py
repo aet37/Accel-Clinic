@@ -107,7 +107,7 @@ def analyze_accel_data(t_pa, x_pa, y_pa, z_pa):
 	f_max = round(f_filt_ret[np.argmax(welch_accel_ret)], 3)
 
 	# Get P-P Amplitude
-	max_pks = find_peaks(accel_data_filt)
+	max_pks, _ = find_peaks(accel_data_filt)
 	neg_pks, _ = find_peaks(np.negative(accel_data_filt))
 	min_pks = np.negative(neg_pks)
 	peak_peak = round(np.mean(max_pks - min_pks), 5)
