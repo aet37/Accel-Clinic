@@ -78,6 +78,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.accel_address = 'C5:02:6A:76:E4:5D'
 		self.accelDevice = Accelerometer(self.accel_address)
 
+		# Ensure device is not
+		self.accelDevice.scan_connect()
+
 		# Spiral
 		self.previous_spiral_ccw = ''
 		self.previous_spiral_cw = ''
@@ -579,7 +582,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.trialNameAccelerom.setEnabled(True)
 		self.downloadAccelButton.setEnabled(False)
 		self.cancelRecordButton.setEnabled(False)
-		self.resetBoardButton.setEnabled(True)
+		self.resetBoardButton.setEnabled(False)
 
 		# Make sure RH variables are reset
 		rh_fls_s = glob.glob(self.data_save_path + 'clinic_rh*_ccw_spiral.csv')
