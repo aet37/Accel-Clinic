@@ -316,6 +316,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		print('  Done.')
 
+		# Generate PDFs of the plots
+		self.generate_pdf()
+
 		# Plot the accelerometer and the improvment plots
 		self.plot_analysis()
 
