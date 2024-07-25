@@ -4,6 +4,9 @@ from PlotFunctions import *
 import os
 import sys
 import glob
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
 
 if sys.platform == 'win32':
 	import warnings
@@ -345,6 +348,14 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.AccelPSDCanvas.axes.set_title(self.accel_trials[to_plot] + ', Accel PSD', fontsize=14)
 		self.AccelPSDCanvas.axes.grid(True)
 		self.AccelPSDCanvas.draw()
+
+		'''
+		# Save the image to folder
+		plt.figure()
+		plt.plot(f, psd, color='b')
+		plt.
+		'''
+
 
 		display_statistics = []
 
