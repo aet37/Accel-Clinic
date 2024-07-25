@@ -328,7 +328,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		# Add the patient info
 		c.setFont("Helvetica-Bold", 18)
-		c.drawString(50, height - 50, self.pt_id + ' Spiral Report')
+		c.drawString(50, height - 40, self.pt_id + ' Spiral Report')
 		c.setFont("Helvetica", 13)
 
 		# Add the date info
@@ -336,7 +336,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			lines = file.readlines()
 			date_plus_time = lines[2]
 
-		c.drawString(50, height - 70, date_plus_time)
+		c.drawString(50, height - 60, date_plus_time)
 
 		# Make directory to save figure if it is not already made
 		if not os.path.isdir(self.data_save_path + 'analysis/pdf_figs/'):
@@ -344,7 +344,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		for i in range(len(self.accel_psds)):
 			# Print the trial name on the PDF
-			c.setFont("Helvetica-Bold", 15)
+			c.setFont("Helvetica-Bold", 13)
 			c.drawString(50, height - 90, self.accel_psds[i])
 			c.setFont("Helvetica", 13)
 
