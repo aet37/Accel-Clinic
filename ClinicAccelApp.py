@@ -7,6 +7,8 @@ import glob
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 import matplotlib.pyplot as plt
 
 if sys.platform == 'win32':
@@ -320,11 +322,32 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 	# Make PDF report
 	def generate_pdf(self):
 
+		# Create the PDF
+		c = canvas.Canvas(self.data_save_path + self.pt_id + '_report.pdf', pagesize=letter)
+		width, height = letter
+
+		# Add the patient info
+		c.setFont("Helvetica-Bold", 18)
+		c.drawString(50, height - 50, self.pt_id + ' Spiral Report')
+		c.setFont("Helvetica", 13)
+
+		# Add the date info
+		with open(self.basePath + self.pt_id + '.txt', 'r') as file:
+			lines = file.readlines()
+			date_plus_time = lines[2]
+
+		c.drawString(50, height - 70, date_plus_time)
+
 		# Make directory to save figure if it is not already made
 		if not os.path.isdir(self.data_save_path + 'analysis/pdf_figs/'):
 			os.mkdir(self.data_save_path + 'analysis/pdf_figs/')
 
 		for i in range(len(self.accel_psds)):
+			# Print the trial name on the PDF
+			c.setFont("Helvetica-Bold", 15)
+			c.drawString(50, height - 90, self.accel_psds[i])
+			c.setFont("Helvetica", 13)
+
 			# Save the PSD (will exist for all)
 			f, psd = load_data_accel_psd(self.data_save_path + 'analysis/' + self.accel_psds[i] + '_accel_psd.csv')
 
@@ -348,6 +371,12 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 						display_statistics.append(round(float(row[1]), 3))
 						display_statistics.append(round(float(row[3]), 3))
 						display_statistics.append(float(row[4]))
+
+			c.drawString(50, height - 110, 'Tremor (PSD) Peak: ' + display_statistics[0], + ' G^2/Hz')
+			c.drawString(50, height - 130, 'Peak at Frequency: ' + display_statistics[3], + ' Hz')
+			c.drawString(50, height - 130, 'Peak-Peak Amplitude of Accelerometer: ' + display_statistics[2], + ' G')
+			c.drawString(50, height - 150, 'AUC of PSD (4-12Hz): ' + display_statistics[1], + ' G*Hz')
+
 
 			# Plot CCW spiral if it exists
 			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_ccw_spiral.csv'):
@@ -421,10 +450,16 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
 				plt.plot(arr_pts_x, arr_pts_y, color='b')
 				plt.title(self.accel_trials[i] + ', Line', fontsize=18)
-				plt.ylim(0, 160)
+				plt.ylim(-20, 180)
 				plt.grid(True)
 				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png')
 				plt.close()
+
+			# Print the current page
+			c.showPage()
+
+		# Save the PDF after it has been printed to
+		c.save()
 
 	# Plot according to the selected item in box
 	def plot_selected(self):
@@ -551,7 +586,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.LineCanvas.draw()
 			self.LineCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.LineCanvas.axes.set_title('Line', fontsize=14)
-			self.LineCanvas.axes.set_ylim(0, 160)
+			self.LineCanvas.axes.set_ylim(-10, 170)
 			self.LineCanvas.draw()
 
 	def clear_all_plots(self):
