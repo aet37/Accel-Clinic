@@ -307,8 +307,8 @@
        <widget class="QPushButton" name="analyze_accel_data">
         <property name="geometry">
          <rect>
-          <x>1540</x>
-          <y>770</y>
+          <x>1550</x>
+          <y>700</y>
           <width>191</width>
           <height>71</height>
          </rect>
@@ -364,6 +364,19 @@
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="generate_pdf_report">
+        <property name="geometry">
+         <rect>
+          <x>1550</x>
+          <y>780</y>
+          <width>191</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Generate PDF</string>
         </property>
        </widget>
       </widget>

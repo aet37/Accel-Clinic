@@ -7,6 +7,7 @@ import glob
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
+import matplotlib.pyplot as plt
 
 if sys.platform == 'win32':
 	import warnings
@@ -130,6 +131,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.cancelRecordButton.clicked.connect(self.cancel_accel_record)
 		self.analyzeAccelDataButton = self.findChild(QtWidgets.QPushButton, 'analyze_accel_data')
 		self.analyzeAccelDataButton.clicked.connect(self.analyze_data)
+		self.generatePDF = self.findChild(QtWidgets.QPushButton, 'generate_pdf_report')
+		self.generatePDF.clicked.connect(self.generate_pdf)
 
 
 		# Radio Button
@@ -314,6 +317,114 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		# Plot the accelerometer and the improvment plots
 		self.plot_analysis()
 
+	# Make PDF report
+	def generate_pdf(self):
+
+		# Make directory to save figure if it is not already made
+		if not os.path.isdir(self.data_save_path + 'analysis/pdf_figs/'):
+			os.mkdir(self.data_save_path + 'analysis/pdf_figs/')
+
+		for i in range(len(self.accel_psds)):
+			# Save the PSD (will exist for all)
+			f, psd = load_data_accel_psd(self.data_save_path + 'analysis/' + self.accel_psds[i] + '_accel_psd.csv')
+
+			# Save the image to folder
+			plt.figure()
+			plt.plot(f, psd, color='b')
+			plt.title(self.accel_trials[i] + ', Accelerometer PSD', fontsize=18)
+			plt.xlabel('Frequency (Hz)', fontsize=14)
+			plt.ylabel('PSD (G^2/Hz)', fontsize=14)
+			plt.grid(True)
+			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_psd.png')
+			plt.close()
+
+			# Get the display statistics
+			display_statistics = []
+			with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
+				spiral_reader = csv.reader(csvfile, delimiter=',')
+				for row in spiral_reader:
+					if spiral_reader.line_num - 1 == to_plot:
+						display_statistics.append(round(float(row[0]), 3))
+						display_statistics.append(round(float(row[1]), 3))
+						display_statistics.append(round(float(row[3]), 3))
+						display_statistics.append(float(row[4]))
+
+			# Plot CCW spiral if it exists
+			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_ccw_spiral.csv'):
+				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[i] + '_ccw_spiral.csv')
+
+				arr_pts_tmp_x = []
+				arr_pts_tmp_y = []
+
+				# Get the points in the current spiral
+				with open(self.application_path + 'ims/ideal_ccw_spiral.csv', newline='') as csvfile:
+					spiral_reader = csv.reader(csvfile, delimiter=',')
+					for row in spiral_reader:
+						arr_pts_tmp_x.append(int(row[1]))
+						arr_pts_tmp_y.append(int(row[2]))
+
+				# Save pngs of spiral
+				plt.figure()
+				plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+				plt.plot(arr_pts_x, arr_pts_y, color='b')
+				plt.title(self.accel_trials[i] + ', CCW Spiral', fontsize=18)
+				plt.grid(True)
+				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_ccw_spiral.png')
+				plt.close()
+
+			# Plot CW spiral if it exists
+			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_cw_spiral.csv'):
+				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[i] + '_cw_spiral.csv')
+
+				arr_pts_tmp_x = []
+				arr_pts_tmp_y = []
+
+				with open(self.application_path + 'ims/ideal_cw_spiral.csv', newline='') as csvfile:
+					spiral_reader = csv.reader(csvfile, delimiter=',')
+					for row in spiral_reader:
+						arr_pts_tmp_x.append(int(row[1]))
+						arr_pts_tmp_y.append(int(row[2]))
+
+				# Save pngs of spiral
+				plt.figure()
+				plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+				plt.plot(arr_pts_x, arr_pts_y, color='b')
+				plt.title(self.accel_trials[i] + ', CW Spiral', fontsize=18)
+				plt.grid(True)
+				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_cw_spiral.png')
+				plt.close()
+
+			# Plot Line if it exists
+			if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv'):
+				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv')
+
+				arr_pts_tmpu_x = []
+				arr_pts_tmpu_y = []
+				arr_pts_tmpl_x = []
+				arr_pts_tmpl_y = []
+				# Get the points in the current spiral
+				with open(self.application_path + 'ims/line_ideal_upper.csv', newline='') as csvfile:
+					spiral_reader = csv.reader(csvfile, delimiter=',')
+					for row in spiral_reader:
+						arr_pts_tmpu_x.append(int(row[1]))
+						arr_pts_tmpu_y.append(int(row[2]))
+
+				with open(self.application_path + 'ims/line_ideal_lower.csv', newline='') as csvfile:
+					spiral_reader = csv.reader(csvfile, delimiter=',')
+					for row in spiral_reader:
+						arr_pts_tmpl_x.append(int(row[1]))
+						arr_pts_tmpl_y.append(int(row[2]))
+
+				# Save pngs of spiral
+				plt.figure()
+				plt.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color='r')
+				plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
+				plt.plot(arr_pts_x, arr_pts_y, color='b')
+				plt.title(self.accel_trials[to_plot] + ', Line', fontsize=18)
+				plt.grid(True)
+				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_line.png')
+				plt.close()
+
 	# Plot according to the selected item in box
 	def plot_selected(self):
 		if self.currentAccelView.currentItem() is None:
@@ -350,17 +461,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.AccelPSDCanvas.axes.set_title(self.accel_trials[to_plot] + ', Accel PSD', fontsize=14)
 		self.AccelPSDCanvas.axes.grid(True)
 		self.AccelPSDCanvas.draw()
-
-		# Save the image to folder
-		plt.figure()
-		plt.plot(f, psd, color='b')
-		plt.title(self.accel_trials[to_plot] + ', Accelerometer PSD', fontsize=18)
-		plt.xlabel('Frequency (Hz)', fontsize=14)
-		plt.ylabel('PSD (G^2/Hz)', fontsize=14)
-		plt.grid(True)
-		plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_psd.png')
-		plt.close()
-
 
 		display_statistics = []
 
@@ -402,15 +502,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCCWCanvas.axes.set_title('CCW Spiral', fontsize=14)
 			self.SpiralCCWCanvas.draw()
 
-			# Save pngs of spiral
-			plt.figure()
-			plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
-			plt.plot(arr_pts_x, arr_pts_y, color='b')
-			plt.title(self.accel_trials[to_plot] + ', CCW Spiral', fontsize=18)
-			plt.grid(True)
-			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_ccw_spiral.png')
-			plt.close()
-
 		# CW
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv'):
 			arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv')
@@ -430,15 +521,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.SpiralCWCanvas.axes.set_title('CW Spiral', fontsize=14)
 			self.SpiralCWCanvas.draw()
-
-			# Save pngs of spiral
-			plt.figure()
-			plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
-			plt.plot(arr_pts_x, arr_pts_y, color='b')
-			plt.title(self.accel_trials[to_plot] + ', CW Spiral', fontsize=18)
-			plt.grid(True)
-			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_cw_spiral.png')
-			plt.close()
 
 		# Line
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv'):
@@ -469,18 +551,6 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.LineCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.LineCanvas.axes.set_title('Line', fontsize=14)
 			self.LineCanvas.draw()
-
-			# Save pngs of spiral
-			plt.figure()
-			plt.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color='r')
-			plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
-			plt.plot(arr_pts_x, arr_pts_y, color='b')
-			plt.title(self.accel_trials[to_plot] + ', Line', fontsize=18)
-			plt.grid(True)
-			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_line.png')
-			plt.close()
-
-
 
 	def clear_all_plots(self):
 		self.AccelPSDCanvas.clear_plot()
