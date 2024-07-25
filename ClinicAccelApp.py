@@ -343,7 +343,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			with open(self.data_save_path + 'analysis/' + 'accel_analysis.csv', newline='') as csvfile:
 				spiral_reader = csv.reader(csvfile, delimiter=',')
 				for row in spiral_reader:
-					if spiral_reader.line_num - 1 == to_plot:
+					if spiral_reader.line_num - 1 == i:
 						display_statistics.append(round(float(row[0]), 3))
 						display_statistics.append(round(float(row[1]), 3))
 						display_statistics.append(round(float(row[3]), 3))
@@ -395,8 +395,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 			# Plot Line if it exists
-			if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv'):
-				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv')
+			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_line_spiral.csv'):
+				arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[i] + '_line_spiral.csv')
 
 				arr_pts_tmpu_x = []
 				arr_pts_tmpu_y = []
@@ -420,9 +420,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color='r')
 				plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
 				plt.plot(arr_pts_x, arr_pts_y, color='b')
-				plt.title(self.accel_trials[to_plot] + ', Line', fontsize=18)
+				plt.title(self.accel_trials[i] + ', Line', fontsize=18)
 				plt.grid(True)
-				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_line.png')
+				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png')
 				plt.close()
 
 	# Plot according to the selected item in box
