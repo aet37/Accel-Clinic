@@ -378,7 +378,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			c.drawString(50, height - 170, 'AUC of PSD (4-12Hz): ' + str(display_statistics[1]) + ' G*Hz')
 
 			# Add the PSD figure in
-			c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_psd.png'), 50, height - 50, width=400, preserveAspectRatio=True, mask='auto')
+			c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_psd.png'), 50, height - 300, width=200, preserveAspectRatio=True, mask='auto')
 
 
 			# Plot CCW spiral if it exists
@@ -405,7 +405,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_ccw_spiral.png'), 50, height - 300, width=250, preserveAspectRatio=True, mask='auto')
+				#c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_ccw_spiral.png'), 50, height - 300, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Plot CW spiral if it exists
 			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_cw_spiral.csv'):
@@ -430,7 +430,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_cw_spiral.png'), 310, height - 300, width=250, preserveAspectRatio=True, mask='auto')
+				#c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_cw_spiral.png'), 310, height - 300, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Plot Line if it exists
 			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_line_spiral.csv'):
@@ -465,7 +465,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png'), 50, height - 500, width=250, preserveAspectRatio=True, mask='auto')
+				#c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png'), 50, height - 500, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Print the current page
 			c.showPage()
