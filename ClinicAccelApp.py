@@ -36,9 +36,9 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 		if sys.platform == 'win32':
 			print('Windows Detected')
-			if os.path.isdir('C:/hifu/'):
-				self.basePath = 'C:/hifu/Clinic-Cases/'
-				self.application_path = 'C:/hifu/Accel-Clinic/'
+			if os.path.isdir('C:\\hifu\\'):
+				self.basePath = 'C:\\hifu\\linic-Cases\\'
+				self.application_path = 'C:\\hifu\\Accel-Clinic\\'
 			else:
 				self.basePath = 'C:/Users/hifuo/Clinic-Cases/'
 				self.application_path = 'C:/Users/hifuo/Accel-Clinic/'
