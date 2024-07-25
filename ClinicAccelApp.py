@@ -374,8 +374,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 
 			c.drawString(50, height - 110, 'Tremor (PSD) Peak: ' + str(display_statistics[0]) + ' G^2/Hz')
 			c.drawString(50, height - 130, 'Peak at Frequency: ' + str(display_statistics[3]) + ' Hz')
-			c.drawString(50, height - 130, 'Peak-Peak Amplitude of Accelerometer: ' + str(display_statistics[2]) + ' G')
-			c.drawString(50, height - 150, 'AUC of PSD (4-12Hz): ' + str(display_statistics[1]) + ' G*Hz')
+			c.drawString(50, height - 150, 'Peak-Peak Amplitude of Accelerometer: ' + str(display_statistics[2]) + ' G')
+			c.drawString(50, height - 170, 'AUC of PSD (4-12Hz): ' + str(display_statistics[1]) + ' G*Hz')
 
 
 			# Plot CCW spiral if it exists
