@@ -405,7 +405,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_ccw_spiral.png'), 50, height - 725, width=250, preserveAspectRatio=True, mask='auto')
+				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_ccw_spiral.png'), 50, height - 750, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Plot CW spiral if it exists
 			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_cw_spiral.csv'):
@@ -430,7 +430,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_cw_spiral.png'), 310, height - 725, width=250, preserveAspectRatio=True, mask='auto')
+				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_cw_spiral.png'), 310, height - 750, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Plot Line if it exists
 			if os.path.isfile(self.data_save_path + self.accel_trials[i] + '_line_spiral.csv'):
@@ -465,7 +465,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.close()
 
 				# Add the PSD figure in
-				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png'), 150, height - 900, width=250, preserveAspectRatio=True, mask='auto')
+				c.drawImage(ImageReader(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png'), 150, height - 925, width=250, preserveAspectRatio=True, mask='auto')
 
 			# Print the current page
 			c.showPage()
