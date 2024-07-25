@@ -351,12 +351,15 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 		self.AccelPSDCanvas.axes.grid(True)
 		self.AccelPSDCanvas.draw()
 
-		'''
 		# Save the image to folder
 		plt.figure()
 		plt.plot(f, psd, color='b')
-		plt.
-		'''
+		plt.title(self.accel_trials[to_plot] + ', Accelerometer PSD', fontsize=18)
+		plt.xlabel('Frequency (Hz)', fontsize=14)
+		plt.ylabel('PSD (G^2/Hz)', fontsize=14)
+		plt.grid(True)
+		plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_psd.png')
+		plt.close()
 
 
 		display_statistics = []
@@ -399,6 +402,15 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCCWCanvas.axes.set_title('CCW Spiral', fontsize=14)
 			self.SpiralCCWCanvas.draw()
 
+			# Save pngs of spiral
+			plt.figure()
+			plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+			plt.plot(arr_pts_x, arr_pts_y, color='b')
+			plt.title(self.accel_trials[to_plot] + ', CCW Spiral', fontsize=18)
+			plt.grid(True)
+			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_ccw_spiral.png')
+			plt.close()
+
 		# CW
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv'):
 			arr_pts_x, arr_pts_y = load_data_spiral(self.data_save_path + self.accel_trials[to_plot] + '_cw_spiral.csv')
@@ -418,6 +430,15 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.SpiralCWCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.SpiralCWCanvas.axes.set_title('CW Spiral', fontsize=14)
 			self.SpiralCWCanvas.draw()
+
+			# Save pngs of spiral
+			plt.figure()
+			plt.plot(arr_pts_tmp_x, arr_pts_tmp_y, color='r')
+			plt.plot(arr_pts_x, arr_pts_y, color='b')
+			plt.title(self.accel_trials[to_plot] + ', CW Spiral', fontsize=18)
+			plt.grid(True)
+			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_cw_spiral.png')
+			plt.close()
 
 		# Line
 		if os.path.isfile(self.data_save_path + self.accel_trials[to_plot] + '_line_spiral.csv'):
@@ -448,6 +469,16 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.LineCanvas.axes.plot(arr_pts_x, arr_pts_y, color='b')
 			self.LineCanvas.axes.set_title('Line', fontsize=14)
 			self.LineCanvas.draw()
+
+			# Save pngs of spiral
+			plt.figure()
+			plt.plot(arr_pts_tmpu_x, arr_pts_tmpu_y, color='r')
+			plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
+			plt.plot(arr_pts_x, arr_pts_y, color='b')
+			plt.title(self.accel_trials[to_plot] + ', Line', fontsize=18)
+			plt.grid(True)
+			plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[to_plot] + '_line.png')
+			plt.close()
 
 
 
