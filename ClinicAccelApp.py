@@ -49,6 +49,8 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 			self.basePath = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/Clinic-Cases/'
 			self.application_path = '/' + tmpdir[1] + '/'+ tmpdir[2] + '/Accel-Clinic/'
 
+		os.chdir(self.application_path)
+
 		uic.loadUi('./spiralDraw.ui', self)
 		self.move(0, 0)
 
