@@ -421,6 +421,7 @@ class spiralDrawSystem(QtWidgets.QMainWindow):
 				plt.plot(arr_pts_tmpl_x, arr_pts_tmpl_y, color='r')
 				plt.plot(arr_pts_x, arr_pts_y, color='b')
 				plt.title(self.accel_trials[i] + ', Line', fontsize=18)
+				plt.ylim([0, 160])
 				plt.grid(True)
 				plt.savefig(self.data_save_path + 'analysis/pdf_figs/' + self.accel_psds[i] + '_line.png')
 				plt.close()
